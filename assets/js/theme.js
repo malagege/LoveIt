@@ -656,15 +656,9 @@ var Theme = /*#__PURE__*/function () {
 
         if ($mermaidElements.length) {
           mermaid.initialize({
-            startOnLoad: false,
+            startOnLoad: true,
             theme: _this7.isDark ? 'dark' : 'neutral',
             securityLevel: 'loose'
-          });
-
-          _this7.util.forEach($mermaidElements, function ($mermaid) {
-            mermaid.render('svg-' + $mermaid.id, _this7.data[$mermaid.id], function (svgCode) {
-              $mermaid.innerHTML = svgCode;
-            }, $mermaid);
           });
         }
       };
