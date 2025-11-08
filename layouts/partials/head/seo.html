@@ -147,7 +147,7 @@
                 "name": {{ . | safeHTML }}
             },
         {{- end -}}
-        "description": {{ if .Description }}{{ .Description | safeHTML }}{{ else }}{{if .IsPage}}{{ .Summary | safeHTML }}{{ end }}{{ end }}
+        "description": {{if .IsPage}}{{ .Summary  }}{{ end }}
     }
     </script>
 {{- end -}}
