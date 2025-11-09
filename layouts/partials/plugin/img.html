@@ -1,6 +1,5 @@
 {{- /* lazysizes and lightgallery */ -}}
 {{- $src := .Src -}}
-{{- $foundStatic := false -}}
 {{- /* 路徑回退：若非遠端，嘗試修正 /blog/posts/、/posts/、/blog/ 前綴並檢查 static/ 是否存在 */ -}}
 {{- $isRemote := or (strings.HasPrefix $src "http://") (strings.HasPrefix $src "https://") -}}
 {{- if not $isRemote -}}
@@ -12,8 +11,8 @@
     {{- $cands = $cands | append (replace $src "/blog/posts/" "/") -}}
     {{- $cands = $cands | append (replace $src "/posts/" "/") -}}
     {{- $cands = $cands | append (replace $src "/blog/" "/") -}}
-    {{- $foundStatic := false -}}
-    {{- range $i, $c := $cands -}}
+    {{- /* 移除未使用變數 $foundStatic 並保留比對邏輯 */ -}}
+    {{- range $c := $cands -}}
         {{- if $c -}}
             {{- $p := $c -}}
             {{- if strings.HasPrefix $p "/" -}}
@@ -22,7 +21,6 @@
             {{- $staticPath := printf "static/%s" $p -}}
             {{- if fileExists $staticPath -}}
                 {{- $src = strings.TrimPrefix "/" $c  -}}
-                {{- $foundStatic = true -}}
                 {{- break -}}
             {{- end -}}
         {{- end -}}
@@ -35,19 +33,15 @@
 
 
 {{- /* Small 來源先做回退，再嘗試資源解析 */ -}}
-{{- $foundStaticS := false -}}
 {{- $small := .SrcSmall -}}
-
 {{- $small = $small | default $src -}}
 {{- $extSmall := path.Ext $small -}}
 
 
 {{- /* Large 同步處理回退與資源解析 */ -}}
-{{- $foundStaticL := false -}}
 {{- $large := .SrcLarge -}}
-
 {{- $large = $large | default $src -}}
-{{- $extLarge := path.Ext $large -}}
+
 
 {{- $alt := .Alt | default $src -}}
 {{- $loading := resources.Get "svg/loading.svg" | minify -}}
