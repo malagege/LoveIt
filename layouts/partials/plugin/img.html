@@ -21,7 +21,7 @@
             {{- end -}}
             {{- $staticPath := printf "static/%s" $p -}}
             {{- if fileExists $staticPath -}}
-                {{- $src = $c -}}
+                {{- $src = strings.TrimPrefix "/" $c  -}}
                 {{- $foundStatic = true -}}
                 {{- break -}}
             {{- end -}}
@@ -32,92 +32,22 @@
 {{- $width := .Width -}}
 {{- $height := .Height -}}
 
-{{- $extSrc := path.Ext $src -}}
-{{- if and .Resources (not $foundStatic) $src (not (strings.HasPrefix $src "http://")) (not (strings.HasPrefix $src "https://")) (not (strings.HasSuffix $src "/")) $extSrc -}}
-    {{- with dict "Path" $src "Resources" .Resources | partial "function/resource.html" -}}
-        {{- $src = .RelPermalink -}}
-        {{- $width = $width | default .Width -}}
-        {{- $height = $height | default .Height -}}
-    {{- end -}}
-{{- end -}}
+
 
 {{- /* Small 來源先做回退，再嘗試資源解析 */ -}}
 {{- $foundStaticS := false -}}
 {{- $small := .SrcSmall -}}
-{{- if $small -}}
-    {{- $isRemoteSmall := or (strings.HasPrefix $small "http://") (strings.HasPrefix $small "https://") -}}
-    {{- if not $isRemoteSmall -}}
-        {{- $baseS := path.Base $small -}}
-        {{- $candsS := slice $baseS (printf "/%s" $baseS) $small -}}
-        {{- if not (strings.HasPrefix $small "/") -}}
-            {{- $candsS = $candsS | append (printf "/%s" $small) -}}
-        {{- end -}}
-        {{- $candsS = $candsS | append (replace $small "/blog/posts/" "/") -}}
-        {{- $candsS = $candsS | append (replace $small "/posts/" "/") -}}
-        {{- $candsS = $candsS | append (replace $small "/blog/" "/") -}}
-        {{- $foundStaticS := false -}}
-        {{- range $i, $c := $candsS -}}
-            {{- if $c -}}
-                {{- $p := $c -}}
-                {{- if strings.HasPrefix $p "/" -}}
-                    {{- $p = strings.TrimPrefix $p "/" -}}
-                {{- end -}}
-                {{- $staticPath := printf "static/%s" $p -}}
-                {{- if fileExists $staticPath -}}
-                    {{- $small = $c -}}
-                    {{- $foundStaticS = true -}}
-                    {{- break -}}
-                {{- end -}}
-            {{- end -}}
-        {{- end -}}
-    {{- end -}}
-{{- end -}}
+
 {{- $small = $small | default $src -}}
 {{- $extSmall := path.Ext $small -}}
-{{- if and .Resources (not $foundStaticS) $small (not (strings.HasPrefix $small "http://")) (not (strings.HasPrefix $small "https://")) (not (strings.HasSuffix $small "/")) $extSmall -}}
-    {{- with dict "Path" $small "Resources" .Resources | partial "function/resource.html" -}}
-        {{- $small = .RelPermalink -}}
-    {{- end -}}
-{{- end -}}
+
 
 {{- /* Large 同步處理回退與資源解析 */ -}}
 {{- $foundStaticL := false -}}
 {{- $large := .SrcLarge -}}
-{{- if $large -}}
-    {{- $isRemoteLarge := or (strings.HasPrefix $large "http://") (strings.HasPrefix $large "https://") -}}
-    {{- if not $isRemoteLarge -}}
-        {{- $baseL := path.Base $large -}}
-        {{- $candsL := slice $baseL (printf "/%s" $baseL) $large -}}
-        {{- if not (strings.HasPrefix $large "/") -}}
-            {{- $candsL = $candsL | append (printf "/%s" $large) -}}
-        {{- end -}}
-        {{- $candsL = $candsL | append (replace $large "/blog/posts/" "/") -}}
-        {{- $candsL = $candsL | append (replace $large "/posts/" "/") -}}
-        {{- $candsL = $candsL | append (replace $large "/blog/" "/") -}}
-        {{- $foundStaticL := false -}}
-        {{- range $i, $c := $candsL -}}
-            {{- if $c -}}
-                {{- $p := $c -}}
-                {{- if strings.HasPrefix $p "/" -}}
-                    {{- $p = strings.TrimPrefix $p "/" -}}
-                {{- end -}}
-                {{- $staticPath := printf "static/%s" $p -}}
-                {{- if fileExists $staticPath -}}
-                    {{- $large = $c -}}
-                    {{- $foundStaticL = true -}}
-                    {{- break -}}
-                {{- end -}}
-            {{- end -}}
-        {{- end -}}
-    {{- end -}}
-{{- end -}}
+
 {{- $large = $large | default $src -}}
 {{- $extLarge := path.Ext $large -}}
-{{- if and .Resources (not $foundStaticL) $large (not (strings.HasPrefix $large "http://")) (not (strings.HasPrefix $large "https://")) (not (strings.HasSuffix $large "/")) $extLarge -}}
-    {{- with dict "Path" $large "Resources" .Resources | partial "function/resource.html" -}}
-        {{- $large = .RelPermalink -}}
-    {{- end -}}
-{{- end -}}
 
 {{- $alt := .Alt | default $src -}}
 {{- $loading := resources.Get "svg/loading.svg" | minify -}}
