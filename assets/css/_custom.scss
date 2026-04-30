@@ -16,3 +16,27 @@
   margin-right: 4px;
 }
 
+/* ☀️ 預設：亮色模式 (Light Theme) */
+.footer-line a {
+  color: #555555; /* 深灰色，確保在白底上對比度 > 4.5:1 */
+  text-decoration: underline; 
+  text-underline-offset: 3px; 
+  text-decoration-color: rgba(85, 85, 85, 0.4); /* 半透明深灰底線 */
+  transition: color 0.2s ease-in-out, text-decoration-color 0.2s ease-in-out;
+}
+
+.footer-line a:hover {
+  color: #000000; /* 滑鼠停懸變純黑 */
+  text-decoration-color: #000000; 
+}
+
+/* 🌙 覆蓋：暗色模式 (Dark Theme) */
+[theme="dark"] .footer-line a {
+  color: #a8a8ad; /* 剛剛測試過可以過關的淺灰色 */
+  text-decoration-color: rgba(168, 168, 173, 0.5); /* 半透明淺灰底線 */
+}
+
+[theme="dark"] .footer-line a:hover {
+  color: #ffffff; /* 滑鼠停懸變純白 */
+  text-decoration-color: #ffffff; 
+}
