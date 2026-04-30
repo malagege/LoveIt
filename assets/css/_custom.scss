@@ -2,3 +2,17 @@
 // Custom style
 // 自定义样式
 // ==============================
+.post-category a {
+  display: inline-block;
+  padding: 0.1em 0.5em;
+  border-radius: 4px;
+  background-color: rgba(45, 150, 189, 0.1); /* 亮暗色皆可用的透明背景 */
+  border: 1px solid rgba(45, 150, 189, 0.3); /* 加上淡淡的邊框 */
+  text-decoration: none; /* 這樣就可以不用底線 */
+}
+
+/* 讓前面的資料夾 icon (fa-folder) 跟標籤對齊 */
+.post-category i {
+  margin-right: 4px;
+}
+
