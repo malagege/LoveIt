@@ -404,10 +404,12 @@ class Theme {
     }
 
     initHeaderLink() {
-        for (let num = 1; num <= 6; num++) {
-            this.util.forEach(document.querySelectorAll('.single .content > h' + num), $header => {
+        for (var num = 1; num <= 6; num++) {
+            this.util.forEach(document.querySelectorAll('.single .content > h' + num), function ($header) {
                 $header.classList.add('headerLink');
-                $header.insertAdjacentHTML('afterbegin', `<a href="#${$header.id}" class="header-mark"></a>`);
+                var symbol = num === 2 ? '#' : num >= 3 && num <= 5 ? '|' : '';
+                var linkContent = symbol;
+                $header.insertAdjacentHTML('afterbegin', `<a href="#${$header.id}" style="color: #55bde2;">${linkContent}</a> `);
             });
         }
     }

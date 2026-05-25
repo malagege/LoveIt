@@ -544,7 +544,9 @@ var Theme = /*#__PURE__*/function () {
       for (var num = 1; num <= 6; num++) {
         this.util.forEach(document.querySelectorAll('.single .content > h' + num), function ($header) {
           $header.classList.add('headerLink');
-          $header.insertAdjacentHTML('afterbegin', "<a href=\"#".concat($header.id, "\" class=\"header-mark\"></a>"));
+          var symbol = num === 2 ? '#' : num >= 3 && num <= 5 ? '|' : '';
+          var linkContent = symbol;//symbol ? symbol + ' ' + $header.textContent : $header.textContent;
+          $header.insertAdjacentHTML('afterbegin', "<a href=\"#".concat($header.id, "\" style=\"color: #55bde2;\">").concat(linkContent, "</a> "));
         });
       }
     }
