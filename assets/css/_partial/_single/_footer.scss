@@ -17,6 +17,10 @@
         font-size: 0.8em;
         color: $global-font-secondary-color;
 
+        .git-hash {
+          margin-left: .25rem;
+        }
+
         [theme=dark] & {
           color: $global-font-secondary-color-dark;
         }
@@ -64,6 +68,24 @@
       display: inline-block;
       margin-right: 3px;
     }
+
+    > i {
+      margin-right: .25rem;
+    }
+
+    .post-tag-separator {
+      margin-right: .25rem;
+    }
+  }
+
+  .post-links {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+  }
+
+  .post-links-separator {
+    opacity: .75;
   }
 
   .post-nav {
