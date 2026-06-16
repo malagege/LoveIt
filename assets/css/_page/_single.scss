@@ -24,6 +24,33 @@
       margin-right: .3rem;
     }
 
+    .post-meta-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: .75rem;
+      row-gap: .35rem;
+    }
+
+    .post-meta-line > span {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 0;
+    }
+
+    .post-meta-item i,
+    .post-category i {
+      margin-right: .25rem;
+    }
+
+    .post-category {
+      margin-left: .1rem;
+    }
+
+    .leancloud-visitors-count {
+      margin-right: .25rem;
+    }
+
     [theme=dark] & {
       color: $global-font-secondary-color-dark;
     }
